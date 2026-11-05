@@ -33,4 +33,4 @@ HTML5 canvas (only to display the finished pixel array), plain JavaScript, Node.
 
 | Name | GitHub | Contribution |
 |---|---|---|
-| (your name) | (your username) | Solo project: all design, algorithms, testing and documentation |
+| William Githinji | Mbobua | Solo project: all design, algorithms, testing and documentation |

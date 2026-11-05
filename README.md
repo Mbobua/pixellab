@@ -22,7 +22,7 @@ from scratch in this repository.
 ## How to run
 
 1. Download or clone this repository.
-2. Open `demo.html` in a browser (click inside a shape to flood-fill it).
+2. Open `idex.html` in a browser (click inside a shape to flood-fill it).
 3. Optional tests (needs Node.js): `node tests/test.js`
 
 ## Technologies

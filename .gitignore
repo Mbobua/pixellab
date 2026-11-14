@@ -1,0 +1,8 @@
+# build results
+*.exe
+*.o
+run_tests
+phase2_demo
+phase3_demo
+# generated pictures (sample results are kept in docs/screenshots)
+output/

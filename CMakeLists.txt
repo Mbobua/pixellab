@@ -1,0 +1,8 @@
+cmake_minimum_required(VERSION 3.10)
+project(PixelLab CXX)
+set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
+include_directories(src)
+add_executable(phase2_demo src/phase2_demo.cpp)
+add_executable(phase3_demo src/phase3_demo.cpp)
+add_executable(tests tests/tests.cpp)

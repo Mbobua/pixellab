@@ -93,4 +93,4 @@ shape points --(3x3 matrix)--> new points --(algorithms)--> pixels in framebuffe
 
 | Name | GitHub | Contribution |
 |---|---|---|
-| (your name) | (your GitHub username) | Solo project: design, algorithms, transformations, testing, documentation |
+| William Githinji | Mbobua | Solo project: design, algorithms, transformations, testing, documentation |

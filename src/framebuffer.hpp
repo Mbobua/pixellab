@@ -46,6 +46,18 @@ public:
         for (auto& p : px_) p = c;
     }
 
+    // Raw pixel data (width * height colours, row by row, top row first): used to upload to OpenGL.
+    const Color* data() const { return px_.data(); }
+
+    // Draw `layer` on top: every non-transparent pixel of the layer replaces the pixel below.
+    void overlay(const Framebuffer& layer) {
+        for (int y = 0; y < h_ && y < layer.h_; ++y)
+            for (int x = 0; x < w_ && x < layer.w_; ++x) {
+                const Color c = layer.get(x, y);
+                if (c.a > 0) set(x, y, c);
+            }
+    }
+
     // Copy another framebuffer into this one with its top-left corner at (ox, oy).
     void blit(const Framebuffer& src, int ox, int oy) {
         for (int y = 0; y < src.h_; ++y)

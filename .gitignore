@@ -2,7 +2,11 @@
 *.exe
 *.o
 run_tests
+run_viewer_tests
 phase2_demo
 phase3_demo
+window_demo
 # generated pictures (sample results are kept in docs/screenshots)
 output/
+screenshot_*.bmp
+viewer_test_shot.bmp

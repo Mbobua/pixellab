@@ -7,6 +7,7 @@ Say in the first sentence: "I am working alone, so I will present all roles."
 ## Before recording
 
 - [ ] Build and run once so the `output/` folder is full (`sh build.sh`).
+- [ ] Build the live window once (`sh build_window.sh`) and check it opens before you start recording.
 - [ ] Open these windows ready to switch between: VS Code (the `src/` folder), a terminal in
       the project folder, and the `output/` folder (or `docs/screenshots/`) with images.
 - [ ] Open `output/anim/` and be ready to flip through the frames (hold the right arrow key).
@@ -124,15 +125,26 @@ demonstrate.* Run the program (`./phase2_demo`, `./phase3_demo`) in the terminal
   orbits the screen centre, a circle pulses (scale about its centre) and a clock hand rotates.
 - **Show:** the 8-frame filmstrip, then flip through `output/anim/frame_000.bmp` to `frame_035.bmp`.
 
+### Live OpenGL window (`window_demo`)
+- **What:** the same program shown in a real-time window. `sh build_window.sh` builds and starts it.
+- **How:** all drawing is still done by my algorithms into the 64x64 framebuffer. OpenGL is used for one job:
+  every frame the pixels are uploaded as a texture (`glTexSubImage2D`) and drawn on one rectangle that fills the
+  window (nearest-neighbour filtering keeps the big pixels sharp). GLFW creates the window and reads the keyboard and mouse.
+- **Show:** press the arrow keys, Q/E and +/- to move, rotate and scale the house (note the blue cross: the pivot);
+  press Space to animate the sun and the ring; press 2 and click to flood-fill; press 1 and drag to draw a line
+  with Bresenham; press S to save a screenshot.
+- **Say:** "Keeping OpenGL separate from my algorithms means the same code produces the .bmp pictures and the
+  live window, and the logic can be tested without a window."
+
 ### Testing
-- Run `./run_tests` and show **20 passed, 0 failed**. Mention a few: Bresenham pixels stay within 0.5 px of the
+- Run `./run_tests` and show **20 passed, 0 failed**; run `./run_viewer_tests` for the 17 interactive-logic checks. Mention a few: Bresenham pixels stay within 0.5 px of the
   true line, circle pixels stay within 0.75 px of the radius, the Bezier midpoint matches the Bernstein formula, and
   scale-then-translate differs from translate-then-scale.
 
 ## 5. Recommendations (about 1 min)
 
 **Say:**
-- **Future additions:** a live window using SDL2 or OpenGL for real-time animation and mouse tools; thick lines;
+- **Future additions:** mouse picking of individual shapes, modern OpenGL (shaders), thick lines;
   anti-aliasing (Xiaolin Wu's line algorithm); Bezier control-point dragging; 3D wireframe with perspective projection.
 - **What I would remove or change:** the 64x64 limit is too small for some rotations, so a resolution setting is a good idea.
 - **Lessons learnt:** keep algorithms independent of the output device (callbacks); write tests against known

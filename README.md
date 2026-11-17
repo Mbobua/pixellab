@@ -15,6 +15,9 @@ with matrices, and animation.
 - **Moves, rotates, scales and flips** shapes using 3x3 matrices, and combines transformations.
 - Produces an **animation** as a sequence of frames.
 - Saves every picture as a `.bmp` file (opens in any image viewer).
+- Optional **live OpenGL window**: move, rotate, scale and animate a shape in real time, draw with
+  the mouse and flood-fill areas. OpenGL only *shows* the finished pixels; all drawing is still done
+  by the algorithms in this repository.
 
 ## How to build and run
 
@@ -40,8 +43,43 @@ g++ -std=c++17 -O2 -I src src/phase3_demo.cpp -o phase3_demo
 g++ -std=c++17 -O2 -I src tests/tests.cpp   -o run_tests
 ./phase2_demo     # writes output/p2_*.bmp
 ./phase3_demo     # writes output/p3_*.bmp and output/anim/frame_*.bmp
-./run_tests       # 20 checks against known maths results
+./run_tests       # 20 checks of the algorithms against known maths results
+./run_viewer_tests  # 17 checks of the interactive logic (no window needed)
 ```
+
+**Live OpenGL window**
+
+Needs the GLFW library (install once):
+
+```bash
+# MSYS2 UCRT64 window (Windows):
+pacman -S --needed mingw-w64-ucrt-x86_64-glfw mingw-w64-ucrt-x86_64-pkgconf
+# Ubuntu / Debian:  sudo apt install libglfw3-dev
+# macOS:            brew install glfw
+```
+
+Then:
+
+```bash
+sh build_window.sh
+```
+
+| Control | Action |
+|---|---|
+| Arrow keys | move the house |
+| Q / E | rotate left / right (15 degrees) |
+| + / - | scale up / down |
+| F | flip horizontally |
+| Space | start / stop the animation (sun orbit, pulsing ring) |
+| 1 / 2 | pencil / bucket (flood fill) tool |
+| N | next colour |
+| Left mouse button | draw with the pencil, or flood-fill with the bucket |
+| C / R | clear paint / reset everything |
+| S | save a screenshot (`screenshot_1.bmp`, ...) |
+| Esc | quit |
+
+Painting is a raster layer drawn on top of the scene, so it stays where you painted it while shapes
+move. Press C to clear it.
 
 **Visual Studio (Developer Command Prompt)**
 
@@ -66,7 +104,9 @@ Sample results are already in `docs/screenshots/`.
 | 2D transformations (3x3 homogeneous matrices) | `src/matrix.hpp` | Translate, rotate, scale, flip | 3 |
 | Rotation about a pivot, `T(c) R T(-c)` | `src/matrix.hpp` | Spinning shapes in place | 3 |
 | Shape model (geometry, then raster) | `src/shapes.hpp` | Transforming then re-drawing shapes | 3 |
-| Animation (per-frame matrices) | `src/phase3_demo.cpp` | Spin, orbit, pulse frames | 3 |
+| Animation (per-frame matrices) | `src/phase3_demo.cpp`, `src/viewer.hpp` | Spin, orbit, pulse frames; live animation | 3 |
+| Interactive viewer (commands, mouse, paint layer) | `src/viewer.hpp` | Scene logic with no window code | 4 |
+| OpenGL display (pixels uploaded as a texture) | `src/window_demo.cpp` | Live window | 4 |
 
 ## Project structure
 
@@ -79,7 +119,10 @@ src/matrix.hpp        3x3 matrices
 src/shapes.hpp        Line / Circle / Polygon / Bezier shapes, transform, draw
 src/phase2_demo.cpp   core graphics pictures
 src/phase3_demo.cpp   transformations, curves, animation pictures
+src/viewer.hpp        interactive scene: commands, mouse, paint layer (no window code)
+src/window_demo.cpp   live OpenGL window (GLFW) that displays the viewer's pixels
 tests/tests.cpp       20 checks of the algorithms
+tests/viewer_tests.cpp  17 checks of the interactive logic
 docs/                 showcase script, screenshots
 ```
 
@@ -87,6 +130,7 @@ docs/                 showcase script, screenshots
 
 ```
 shape points --(3x3 matrix)--> new points --(algorithms)--> pixels in framebuffer --> .bmp file
+                                                                              \--> OpenGL texture --> window
 ```
 
 ## Contributors
